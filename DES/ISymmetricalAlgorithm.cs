@@ -2,8 +2,8 @@
 {
     public interface ISymmetricalAlgorithm
     {
-        public byte[] Encrypt(byte[] block);
-        public byte[] Decrypt(byte[] block);
-        public void GenerateRoundKeys(byte[] key);
+        public byte[] Encrypt(byte[] block, byte[][] roundKeys);
+        public byte[] Decrypt(byte[] block, byte[][] roundKeys);
+        public byte[][] GenerateRoundKeys(byte[] key);
     }
 }

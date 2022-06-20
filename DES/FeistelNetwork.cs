@@ -7,7 +7,6 @@ namespace DES
     {
         private readonly IRoundKeyGenerator _roundKeysGenerator;
         private readonly IEncryptionTransformation _feistelFunction;
-        private byte[][] _roundKeys;
         
         public FeistelNetwork(IRoundKeyGenerator roundKeysGenerator, IEncryptionTransformation feistelFunction)
         {
@@ -15,37 +14,37 @@ namespace DES
             _feistelFunction = feistelFunction;
         }
 
-        public byte[] Encrypt(byte[] block)
+        public byte[] Encrypt(byte[] block, byte[][] roundKeys)
         {
             var left = block.Take(block.Length / 2).ToArray();
             var right = block.Skip(block.Length / 2).ToArray();
             for (var i = 0; i < 16; i++)
             {
                 var tmp = right;
-                right = left.Xor(_feistelFunction.Transform(right, _roundKeys[i]));
+                right = left.Xor(_feistelFunction.Transform(right, roundKeys[i]));
                 left = tmp;
             }
 
             return left.Concat(right).ToArray();
         }
 
-        public byte[] Decrypt(byte[] block)
+        public byte[] Decrypt(byte[] block, byte[][] roundKeys)
         {
             var left = block.Take(block.Length / 2).ToArray();
             var right = block.Skip(block.Length / 2).ToArray();
             for (var i = 15; i >= 0; i--)
             {
                 var tmp = left;
-                left = right.Xor(_feistelFunction.Transform(right, _roundKeys[i]));
+                left = right.Xor(_feistelFunction.Transform(right, roundKeys[i]));
                 right = tmp;
             }
 
             return left.Concat(right).ToArray();
         }
 
-        public void GenerateRoundKeys(byte[] key)
+        public byte[][] GenerateRoundKeys(byte[] key)
         {
-            _roundKeys = _roundKeysGenerator.GenerateRoundKeys(key);
+            return _roundKeysGenerator.GenerateRoundKeys(key);
         }
     }
 }

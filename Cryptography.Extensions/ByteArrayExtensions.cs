@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 
 namespace Cryptography.Extensions
 {
@@ -6,20 +7,25 @@ namespace Cryptography.Extensions
     {
         public static byte[] Permutation(byte[] block, byte[] permutationTable)
         {
-            var number = BitConverter.ToUInt64(block, 0);
-            ulong changed = 0;
-            for (var i = 0; i < permutationTable.Length; ++i)
+            var bitsblock = new BitArray(block);
+
+            var changed = new BitArray(permutationTable.Length);
+            for (var i = 0; i < permutationTable.Length; i++)
             {
-                var findBit = (number >> (permutationTable[i] - 1)) & 1;
-                changed |= findBit << i;
+                changed[i] = bitsblock[permutationTable[i] - 1];
             }
             
-            return BitConverter.GetBytes(changed);
+            return BitArrayToByteArray(changed);
         }
-        
+        public static byte[] BitArrayToByteArray(BitArray bits)
+        {
+            byte[] bytes = new byte[(bits.Length - 1) / 8 + 1];
+            bits.CopyTo(bytes, 0);
+            return bytes;
+        }
         public static byte[] PermutationSBlock(byte[] block, byte[,,] permutationTable)
         {
-            var number = BitConverter.ToUInt64(block, 0);
+            var number = BitConverter.ToUInt32(block, 0);
             ulong result = 0;
             for (var i = 0; i < 8; i++)
             {
@@ -59,11 +65,14 @@ namespace Cryptography.Extensions
             return left;
         }
         
-        public static byte[] ShiftLeft(byte[] number, byte shift)
+        public static byte[] PaddingPKCs7(byte[] block, int blockSize)
         {
-            var value = BitConverter.ToUInt32(number);
+            var addition = (byte) (blockSize - block.Length % blockSize);
+            var paddedBlock = new byte[block.Length + addition];
+            Array.Copy(block, paddedBlock, block.Length);
+            Array.Fill(paddedBlock, addition, block.Length, addition); 
             
-            return  BitConverter.GetBytes(((value << shift) | (value >> (28 - shift)))& ((1 << 28) - 1));
+            return paddedBlock;
         }
     }
 }
