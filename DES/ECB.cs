@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace DES
 {
@@ -16,9 +17,7 @@ namespace DES
             var result = new byte[message.Length];
             for (var i = 0; i < result.Length / 8; i++)
             {
-                var currentBlock = new byte[8];
-                
-                Array.Copy(message, i * 8, currentBlock, 0, 8);
+                var currentBlock = message.Skip(i * 8).Take(8).ToArray();
                 currentBlock = _encoder.Encrypt(currentBlock, roundKeys);
                 Array.Copy(currentBlock, 0, result, i * 8, 8);
             }
@@ -31,9 +30,7 @@ namespace DES
             var result = new byte[message.Length];
             for (var i = 0; i < result.Length / 8; i++)
             {
-                var currentBlock = new byte[8];
-
-                Array.Copy(message, i * 8, currentBlock, 0, 8);
+                var currentBlock = message.Skip(i * 8).Take(8).ToArray();
                 currentBlock = _encoder.Decrypt(currentBlock, roundKeys);
                 Array.Copy(currentBlock, 0, result, i * 8, 8);
             }
