@@ -15,11 +15,11 @@ namespace DES
         public byte[] EncryptBlock(byte[] message, byte[][] roundKeys)
         {
             var result = new byte[message.Length];
-            for (var i = 0; i < result.Length / 8; i++)
+            for (var i = 0; i < result.Length / _encoder.BlockSize; i++)
             {
-                var currentBlock = message.Skip(i * 8).Take(8).ToArray();
+                var currentBlock = message.Skip(i * _encoder.BlockSize).Take(_encoder.BlockSize).ToArray();
                 currentBlock = _encoder.Encrypt(currentBlock, roundKeys);
-                Array.Copy(currentBlock, 0, result, i * 8, 8);
+                Array.Copy(currentBlock, 0, result, i * _encoder.BlockSize, _encoder.BlockSize);
             }
 
             return result;
@@ -28,11 +28,11 @@ namespace DES
         public byte[] DecryptBlock(byte[] message, byte[][] roundKeys)
         {
             var result = new byte[message.Length];
-            for (var i = 0; i < result.Length / 8; i++)
+            for (var i = 0; i < result.Length / _encoder.BlockSize; i++)
             {
-                var currentBlock = message.Skip(i * 8).Take(8).ToArray();
+                var currentBlock = message.Skip(i * _encoder.BlockSize).Take(_encoder.BlockSize).ToArray();
                 currentBlock = _encoder.Decrypt(currentBlock, roundKeys);
-                Array.Copy(currentBlock, 0, result, i * 8, 8);
+                Array.Copy(currentBlock, 0, result, i * _encoder.BlockSize, _encoder.BlockSize);
             }
             Array.Resize(ref result, message.Length - result[^1]);
             
