@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Numerics;
 using System.Text;
 
@@ -17,16 +18,43 @@ namespace DES
             
             byte[] block = Encoding.Default.GetBytes(b);
 
-            var q = new CipherContext(key, EncryptionMode.CFB, new byte[]{1,1,1,0,1,1,1,1});
+            //var q = new CipherContext(key, EncryptionMode.CFB, new byte[]{1,1,1,0,1,1,1,1});
             //var q = new CipherContext(key, EncryptionMode.ECB);
-
+            //var q = new CipherContext(key, EncryptionMode.CBC, new byte[]{1,1,1,0,1,1,1,1});
+            var q = new CipherContext(key, EncryptionMode.OFB, new byte[]{1,1,1,0,1,1,1,1});
+            //var q = new CipherContext(key, EncryptionMode.CTR, new byte[]{1,1,1,0,1,1,1,1});
             q.Encoder = new DES();
             var keys = q.GenerateRoundKeys();
-
-            var en = q.Encrypt(block, keys);
+            
+            //const string origin = "testing.txt";
+            //const string encrypted = "encrypted.txt";
+            //const string decrypted = "decrypted.txt";
+            //const string origin = "test.jpg";
+            //const string encrypted = "encrypted.jpg";
+            //const string decrypted = "decrypted.jpg";
+            const string origin = "test.mp4";
+            const string encrypted = "encrypted.mp4";
+            const string decrypted = "decrypted.mp4";
+            var workingDir = Directory.GetParent(Environment.CurrentDirectory)?.Parent?.Parent?.FullName;
+            if (workingDir == null)
+                return;
+            var originPath = Path.Combine(workingDir, origin);
+            var encryptedPath = Path.Combine(workingDir, encrypted);
+            var decryptedPath = Path.Combine(workingDir, decrypted);
+            
+            var bytes = File.ReadAllBytes(originPath);
+            var encryptedBytes = q.Encrypt(bytes, keys);
+            File.WriteAllBytes(encryptedPath, encryptedBytes);
+            
+            var bytes2 = File.ReadAllBytes(encryptedPath);
+            var decryptedBytes = q.Decrypt(bytes2, keys);
+            File.WriteAllBytes(decryptedPath, decryptedBytes);
+            
+            
+            /*var en = q.Encrypt(block, keys);
             var dec = q.Decrypt(en, keys);
-            Console.WriteLine(Encoding.Default.GetString(dec));
-
+            Console.WriteLine(Encoding.Default.GetString(dec));*/
+            
         }
     }
 }

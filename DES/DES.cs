@@ -1,24 +1,37 @@
-﻿using static Cryptography.Extensions.ByteArrayExtensions;
+﻿using System;
+using static Cryptography.Extensions.ByteArrayExtensions;
 
 namespace DES
 {
     public class DES: ISymmetricalAlgorithm
     {
-        private readonly ISymmetricalAlgorithm _feistelNetwork = new FeistelNetwork(new DESRoundKeyGenerator(), new DESFeistelFunction());
+        private const int _blockSize = 8;
+        private readonly ISymmetricalAlgorithm _feistelNetwork = new FeistelNetwork(new DESRoundKeyGenerator(), new DESFeistelFunction(), _blockSize);
 
-        public byte[] Encrypt(byte[] message, byte[][] roundKeys)
+        public int BlockSize => _blockSize;
+        public byte[] Encrypt(byte[] block, byte[][] roundKeys)
         {
-            message = Permutation(message, Tables.InitialPermutation);
-            message = _feistelNetwork.Encrypt(message, roundKeys);
+            if (block.Length != _blockSize)
+            {
+                throw new ArgumentException($"Block length must be equal to {_blockSize}.");
+            }
             
-            return Permutation(message, Tables.FinalPermutation);
+            block = Permutation(block, Tables.InitialPermutation);
+            block = _feistelNetwork.Encrypt(block, roundKeys);
+            
+            return Permutation(block, Tables.FinalPermutation);
         }
-        public byte[] Decrypt(byte[] message, byte[][] roundKeys)
+        public byte[] Decrypt(byte[] block, byte[][] roundKeys)
         {
-            message = Permutation(message, Tables.InitialPermutation);
-            message = _feistelNetwork.Decrypt(message, roundKeys);
+            if (block.Length != _blockSize)
+            {
+                throw new ArgumentException($"Block length must be equal to {_blockSize}.");
+            }
             
-            return Permutation(message, Tables.FinalPermutation);
+            block = Permutation(block, Tables.InitialPermutation);
+            block = _feistelNetwork.Decrypt(block, roundKeys);
+            
+            return Permutation(block, Tables.FinalPermutation);
         }
         public byte[][] GenerateRoundKeys(byte[] key)
         {
