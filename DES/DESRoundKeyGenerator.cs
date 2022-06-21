@@ -1,6 +1,4 @@
 ﻿using System.Collections;
-using System.Linq;
-using System.Numerics;
 using static Cryptography.Extensions.BitArrayExtensions;
 using static Cryptography.Extensions.ByteArrayExtensions;
 
