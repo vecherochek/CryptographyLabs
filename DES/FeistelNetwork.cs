@@ -27,7 +27,7 @@ namespace DES
 
             return left.Concat(right).ToArray();
         }
-
+        
         public byte[] Decrypt(byte[] block, byte[][] roundKeys)
         {
             var left = block.Take(block.Length / 2).ToArray();
@@ -35,7 +35,7 @@ namespace DES
             for (var i = 15; i >= 0; i--)
             {
                 var tmp = left;
-                left = right.Xor(_feistelFunction.Transform(right, roundKeys[i]));
+                left = right.Xor(_feistelFunction.Transform(left, roundKeys[i]));
                 right = tmp;
             }
 

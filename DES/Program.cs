@@ -10,20 +10,19 @@ namespace DES
         {
             ulong a =  0x1234567890abcdef;
             
-            string b = "кек65";
+            string b = "кек-908ьл87о6и7гр5мпн6еакеапнр7го8л90щ8ш67гн64е53ке6н7гшщ0978ттт8тг88г78гго67нг5756н";
             
             byte[] key = BitConverter.GetBytes(a);
             
             byte[] block = Encoding.Default.GetBytes(b);
 
             var q = new CipherContext(key, EncryptionMode.ECB);
-            q.Encrypter = new DES();
+            q.Encoder = new DES();
             var keys = q.GenerateRoundKeys();
-            var t = new BigInteger(keys[0]);
+
             var en = q.Encrypt(block, keys);
-            Console.WriteLine(new BigInteger(en));
-            var dec = q.Decrypt(block, keys);
-            Console.WriteLine(Encoding.Default.GetString(dec)); 
+            var dec = q.Decrypt(en, keys);
+            Console.WriteLine(Encoding.Default.GetString(dec));
 
         }
     }

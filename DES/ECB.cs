@@ -4,11 +4,11 @@ namespace DES
 {
     public class ECB
     {
-        private ISymmetricalAlgorithm _encryptor;
+        private ISymmetricalAlgorithm _encoder;
         
         public ECB(ISymmetricalAlgorithm encryptor)
         {
-            _encryptor = encryptor;
+            _encoder = encryptor;
         }
         
         public byte[] EncryptBlock(byte[] message, byte[][] roundKeys)
@@ -19,7 +19,7 @@ namespace DES
                 var currentBlock = new byte[8];
                 
                 Array.Copy(message, i * 8, currentBlock, 0, 8);
-                currentBlock = _encryptor.Encrypt(currentBlock, roundKeys);
+                currentBlock = _encoder.Encrypt(currentBlock, roundKeys);
                 Array.Copy(currentBlock, 0, result, i * 8, 8);
             }
 
@@ -34,7 +34,7 @@ namespace DES
                 var currentBlock = new byte[8];
 
                 Array.Copy(message, i * 8, currentBlock, 0, 8);
-                currentBlock = _encryptor.Decrypt(currentBlock, roundKeys);
+                currentBlock = _encoder.Decrypt(currentBlock, roundKeys);
                 Array.Copy(currentBlock, 0, result, i * 8, 8);
             }
             Array.Resize(ref result, message.Length - result[^1]);

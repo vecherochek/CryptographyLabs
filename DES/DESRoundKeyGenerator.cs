@@ -23,7 +23,7 @@ namespace DES
                 var currentKey = currentC.BitsConcat(currentD);
                 roundKeys[i] = BitArrayToByteArray(BitsPermutation(currentKey, Tables.KeyСompressionPermutation));
             }
-            //TODO: дописать генерацию ключей, а то чота не робит)))))))
+
             return roundKeys;
         }
     }

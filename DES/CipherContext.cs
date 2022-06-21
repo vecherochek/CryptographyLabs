@@ -18,7 +18,7 @@ namespace DES
     {
         private readonly byte[] _key;    
         private readonly EncryptionMode _encryptionMode;
-        public ISymmetricalAlgorithm Encrypter { get; set; }
+        public ISymmetricalAlgorithm Encoder { get; set; }
         public CipherContext(byte[] key, EncryptionMode encryptionMode, params object[] values)
         {
             _key = key;
@@ -32,7 +32,7 @@ namespace DES
             switch (_encryptionMode)
             {
                 case EncryptionMode.ECB: 
-                    return new ECB(Encrypter).EncryptBlock(original, roundKeys);
+                    return new ECB(Encoder).EncryptBlock(original, roundKeys);
                 
                 default: 
                     throw new ArgumentOutOfRangeException(nameof(_encryptionMode), _encryptionMode, null);
@@ -40,12 +40,10 @@ namespace DES
         }
         public byte[] Decrypt(byte[] message, byte[][] roundKeys)
         {
-            var original = PaddingPKCs7(message, 8);
-            
             switch (_encryptionMode)
             {
                 case EncryptionMode.ECB: 
-                    return new ECB(Encrypter).DecryptBlock(original, roundKeys);
+                    return new ECB(Encoder).DecryptBlock(message, roundKeys);
                 
                 default: 
                     throw new ArgumentOutOfRangeException(nameof(_encryptionMode), _encryptionMode, null);
@@ -53,7 +51,7 @@ namespace DES
         }
         public byte[][] GenerateRoundKeys()
         {
-            return Encrypter.GenerateRoundKeys(_key);
+            return Encoder.GenerateRoundKeys(_key);
         }
     }
 }
