@@ -13,20 +13,20 @@ namespace DES
             _encoder = encryptor;
         }
         
-        public byte[] EncryptBlock(byte[] message, byte[][] roundKeys, object[] initializationVector)
+        public byte[] EncryptBlock(byte[] message, byte[][] roundKeys,object[] initializationVector)
         {
             var result = new byte[message.Length];
-            var prevBlock = new byte[8];
+            var prevBlock = new byte[_encoder.BlockSize];
             
             Array.Copy((byte[])initializationVector[0], prevBlock, prevBlock.Length);
-            for (var i = 0; i < result.Length / 8; i++)
+            for (var i = 0; i < result.Length / _encoder.BlockSize; i++)
             {
-                var currentBlock = new byte[8];
+                var currentBlock = message.Skip(i * _encoder.BlockSize).Take(_encoder.BlockSize).ToArray();
                 
-                Array.Copy(message, i * 8, currentBlock, 0, 8);
                 currentBlock = prevBlock.Xor(currentBlock);
                 prevBlock = _encoder.Encrypt(currentBlock, roundKeys);
-                Array.Copy(prevBlock, 0, result, i * 8, 8);
+                
+                Array.Copy(prevBlock, 0, result, i * _encoder.BlockSize, _encoder.BlockSize);
             }
 
             return result;
@@ -35,20 +35,18 @@ namespace DES
         public byte[] DecryptBlock(byte[] message, byte[][] roundKeys, object[] initializationVector)
         {
             var result = new byte[message.Length];
-            var prevBlock = new byte[8];
+            var prevBlock = new byte[_encoder.BlockSize];
             
             Array.Copy((byte[])initializationVector[0], prevBlock, prevBlock.Length);
-            for (var i = 0; i < result.Length / 8; i++)
+            for (var i = 0; i < result.Length / _encoder.BlockSize; i++)
             {
-                var currentBlock = new byte[8];
-                var tmp = new byte[8];
+                var currentBlock = message.Skip(i * _encoder.BlockSize).Take(_encoder.BlockSize).ToArray();
                 
-                Array.Copy(message, i * 8, currentBlock, 0, 8);
-                Array.Copy(currentBlock, tmp , tmp.Length);
                 currentBlock = _encoder.Decrypt(currentBlock, roundKeys);
                 currentBlock = prevBlock.Xor(currentBlock);
-                Array.Copy(tmp, prevBlock, prevBlock.Length);
-                Array.Copy(currentBlock, 0, result, i * 8, 8);
+                
+                prevBlock = message.Skip(i * _encoder.BlockSize).Take(_encoder.BlockSize).ToArray();;
+                Array.Copy(currentBlock, 0, result, i * _encoder.BlockSize, _encoder.BlockSize);
             }
             Array.Resize(ref result, message.Length - result[^1]);
             
