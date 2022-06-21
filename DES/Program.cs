@@ -11,12 +11,15 @@ namespace DES
             ulong a =  0x1234567890abcdef;
             
             string b = "кек-908ьл87о6и7гр5мпн6еакеапнр7го8л90щ8ш67гн64е53ке6н7гшщ0978ттт8тг88г78гго67нг5756н";
-            
+            //string b = "кек";
+
             byte[] key = BitConverter.GetBytes(a);
             
             byte[] block = Encoding.Default.GetBytes(b);
 
-            var q = new CipherContext(key, EncryptionMode.ECB);
+            var q = new CipherContext(key, EncryptionMode.CFB, new byte[]{1,1,1,0,1,1,1,1});
+            //var q = new CipherContext(key, EncryptionMode.ECB);
+
             q.Encoder = new DES();
             var keys = q.GenerateRoundKeys();
 

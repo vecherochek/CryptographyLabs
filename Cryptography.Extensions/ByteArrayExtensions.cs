@@ -56,13 +56,14 @@ namespace Cryptography.Extensions
             {
                 throw new ArgumentException("Arrays lengths must be equal.");
             }
-
+            
+            var result = new byte[left.Length];
             for (var i = 0; i < left.Length; i++)
             {
-                left[i] ^= right[i];
+                result[i] = (byte) (left[i] ^ right[i]);
             }
 
-            return left;
+            return result;
         }
         
         public static byte[] PaddingPKCs7(byte[] block, int blockSize)
