@@ -1,7 +1,9 @@
 ﻿using System;
+using CipherContext.EncryptionModes;
+using SymmetricalAlgorithm;
 using static Cryptography.Extensions.ByteArrayExtensions;
 
-namespace DES
+namespace CipherContext
 {
     public enum EncryptionMode
     {
@@ -43,8 +45,12 @@ namespace DES
                     return new OFB(Encoder).EncryptBlock(original, roundKeys, _values);
                 case EncryptionMode.CTR:
                     return new CTR(Encoder).EncryptBlock(original, roundKeys, _values);
+                case EncryptionMode.RD:
+                    return new RD(Encoder).EncryptBlock(original, roundKeys, _values);
+                case EncryptionMode.RDH:
+                    return new RDH(Encoder).EncryptBlock(original, roundKeys, _values);
                 default: 
-                    throw new ArgumentOutOfRangeException(nameof(_encryptionMode), _encryptionMode, null);
+                    throw new ArgumentOutOfRangeException(nameof(_encryptionMode), _encryptionMode, "kek");
             }
         }
         public byte[] Decrypt(byte[] message, byte[][] roundKeys)
@@ -61,8 +67,12 @@ namespace DES
                     return new OFB(Encoder).DecryptBlock(message, roundKeys, _values);
                 case EncryptionMode.CTR:
                     return new CTR(Encoder).DecryptBlock(message, roundKeys, _values);
+                case EncryptionMode.RD:
+                    return new RD(Encoder).DecryptBlock(message, roundKeys);
+                case EncryptionMode.RDH:
+                    return new RDH(Encoder).DecryptBlock(message, roundKeys);
                 default: 
-                    throw new ArgumentOutOfRangeException(nameof(_encryptionMode), _encryptionMode, null);
+                    throw new ArgumentOutOfRangeException(nameof(_encryptionMode), _encryptionMode, "kek");
             }
         }
         public byte[][] GenerateRoundKeys()
@@ -70,4 +80,5 @@ namespace DES
             return Encoder.GenerateRoundKeys(_key);
         }
     }
+    
 }
