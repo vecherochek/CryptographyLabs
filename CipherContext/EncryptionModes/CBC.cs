@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Linq;
-using Cryptography.Extensions;
+using SymmetricalAlgorithm;
+using static Cryptography.Extensions.ByteArrayExtensions;
 
-namespace DES
+namespace CipherContext.EncryptionModes
 {
-    public class CBC
+    internal class CBC
     {
         private ISymmetricalAlgorithm _encoder;
         
@@ -19,13 +20,12 @@ namespace DES
             var prevBlock = new byte[_encoder.BlockSize];
             
             Array.Copy((byte[])initializationVector[0], prevBlock, prevBlock.Length);
-            for (var i = 0; i < result.Length / _encoder.BlockSize; i++)
+            for (var i = 0; i < message.Length / _encoder.BlockSize; i++)
             {
                 var currentBlock = message.Skip(i * _encoder.BlockSize).Take(_encoder.BlockSize).ToArray();
                 
                 currentBlock = prevBlock.Xor(currentBlock);
                 prevBlock = _encoder.Encrypt(currentBlock, roundKeys);
-                
                 Array.Copy(prevBlock, 0, result, i * _encoder.BlockSize, _encoder.BlockSize);
             }
 
