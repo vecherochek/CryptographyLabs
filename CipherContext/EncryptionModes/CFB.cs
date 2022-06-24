@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Linq;
-using Cryptography.Extensions;
+using SymmetricalAlgorithm;
+using static Cryptography.Extensions.ByteArrayExtensions;
 
-namespace DES
+namespace CipherContext.EncryptionModes
 {
-    public class CFB
+    internal class CFB
     {
         private ISymmetricalAlgorithm _encoder;
         
