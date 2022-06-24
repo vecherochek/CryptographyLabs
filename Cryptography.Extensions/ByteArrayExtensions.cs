@@ -19,7 +19,7 @@ namespace Cryptography.Extensions
         }
         public static byte[] BitArrayToByteArray(BitArray bits)
         {
-            byte[] bytes = new byte[(bits.Length - 1) / 8 + 1];
+            var bytes = new byte[(bits.Length - 1) / 8 + 1];
             bits.CopyTo(bytes, 0);
             return bytes;
         }
@@ -74,6 +74,70 @@ namespace Cryptography.Extensions
             Array.Fill(paddedBlock, addition, block.Length, addition); 
             
             return paddedBlock;
+        }
+        public static byte[] ByteArrayAdditionByModulo2PowN(byte[] left, byte[] right)
+        {
+            BitArray num1, num2;
+            
+            if (left.Length > right.Length)
+            {
+                num1 = new BitArray(left);
+                num2 = new BitArray(right);
+            }
+            else
+            {
+                num1 = new BitArray(right);
+                num2 = new BitArray(left);
+            }
+
+            var max = num1.Count;
+            var min = num2.Count;
+            var result = new BitArray(num1);
+            var tmp = false;
+            for (var i = max / 8; i > (max - min) / 8; i--)
+            {
+                for (var j = 8; j > 0; j--)
+                {
+                    var w = i * 8 - j;
+                    var t = (i - (max - min) / 8) * 8 - j;
+                    if (num1[w] == num2[t] && num2[t] == tmp)
+                    {
+                        result[i * 8 - 1] = tmp;
+                    }
+                    else if (!(num1[w] ^ num2[t] ^ tmp))
+                    {
+                        result[w] = false;
+                        tmp = true;
+                    }
+                    else if (num1[w] ^ num2[t] ^ tmp)
+                    {
+                        result[w] = true;
+                        tmp = false;
+                    }
+                }
+            }
+
+            if (tmp)
+            {
+                for (var i = (max - min) / 8; i > 0; i--)
+                {
+                    for (var j = 8; j > 0; j--)
+                    {
+                        var w = i * 8 - j;
+                        if (num1[w])
+                        {
+                            result[w] = false;
+                        }
+                        else
+                        {
+                            result[w] = true;
+                            return BitArrayToByteArray(result);
+                        }
+                    }
+                }
+            }
+
+            return BitArrayToByteArray(result);
         }
     }
 }
