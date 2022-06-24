@@ -1,4 +1,4 @@
-﻿namespace DES
+﻿namespace SymmetricalAlgorithm
 {
     public interface IEncryptionTransformation
     {
