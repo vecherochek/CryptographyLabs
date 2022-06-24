@@ -17,3 +17,7 @@ C:\Users\pbure\RiderProjects\CryptographyLabs\DES\obj\Debug\net5.0\DES.genruntim
 C:\Users\pbure\RiderProjects\CryptographyLabs\DES\bin\Debug\net5.0\Cryptography.Extensions.dll
 C:\Users\pbure\RiderProjects\CryptographyLabs\DES\bin\Debug\net5.0\Cryptography.Extensions.pdb
 C:\Users\pbure\RiderProjects\CryptographyLabs\DES\obj\Debug\net5.0\DES.csproj.CopyComplete
+C:\Users\pbure\RiderProjects\CryptographyLabs\DES\bin\Debug\net5.0\CipherContext.dll
+C:\Users\pbure\RiderProjects\CryptographyLabs\DES\bin\Debug\net5.0\SymmetricalAlgorithm.dll
+C:\Users\pbure\RiderProjects\CryptographyLabs\DES\bin\Debug\net5.0\CipherContext.pdb
+C:\Users\pbure\RiderProjects\CryptographyLabs\DES\bin\Debug\net5.0\SymmetricalAlgorithm.pdb

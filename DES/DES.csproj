@@ -6,7 +6,9 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\CipherContext\CipherContext.csproj" />
       <ProjectReference Include="..\Cryptography.Extensions\Cryptography.Extensions.csproj" />
+      <ProjectReference Include="..\SymmetricalAlgorithm\SymmetricalAlgorithm.csproj" />
     </ItemGroup>
 
 </Project>

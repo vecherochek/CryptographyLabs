@@ -1,4 +1,5 @@
 ﻿using System;
+using SymmetricalAlgorithm;
 using static Cryptography.Extensions.ByteArrayExtensions;
 
 namespace DES

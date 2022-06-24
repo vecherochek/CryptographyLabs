@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using SymmetricalAlgorithm;
 using static Cryptography.Extensions.ByteArrayExtensions;
 
 namespace DES

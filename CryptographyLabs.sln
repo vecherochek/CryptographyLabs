@@ -4,6 +4,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DES", "DES\DES.csproj", "{D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cryptography.Extensions", "Cryptography.Extensions\Cryptography.Extensions.csproj", "{01C15DEC-5AED-4D1D-B930-14F2296143B0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CipherContext", "CipherContext\CipherContext.csproj", "{176E6C8F-307B-4DE8-ABB1-375487629856}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SymmetricalAlgorithm", "SymmetricalAlgorithm\SymmetricalAlgorithm.csproj", "{42DED9F7-2040-4876-BA1A-7AB86ECDC94B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +22,13 @@ Global
 		{01C15DEC-5AED-4D1D-B930-14F2296143B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01C15DEC-5AED-4D1D-B930-14F2296143B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01C15DEC-5AED-4D1D-B930-14F2296143B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{176E6C8F-307B-4DE8-ABB1-375487629856}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{176E6C8F-307B-4DE8-ABB1-375487629856}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{176E6C8F-307B-4DE8-ABB1-375487629856}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{176E6C8F-307B-4DE8-ABB1-375487629856}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42DED9F7-2040-4876-BA1A-7AB86ECDC94B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42DED9F7-2040-4876-BA1A-7AB86ECDC94B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42DED9F7-2040-4876-BA1A-7AB86ECDC94B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42DED9F7-2040-4876-BA1A-7AB86ECDC94B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

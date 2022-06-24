@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using SymmetricalAlgorithm;
 using static Cryptography.Extensions.BitArrayExtensions;
 using static Cryptography.Extensions.ByteArrayExtensions;
 

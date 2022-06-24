@@ -1,4 +1,5 @@
-﻿using static Cryptography.Extensions.ByteArrayExtensions;
+﻿using SymmetricalAlgorithm;
+using static Cryptography.Extensions.ByteArrayExtensions;
 
 namespace DES
 {
@@ -8,9 +9,9 @@ namespace DES
         {
             var expandingPermutation = Permutation(block, Tables.ExpandingPermutation);
             var xor = expandingPermutation.Xor(roundKey);
-            var SBlock = PermutationSBlock(xor, Tables.SBlocks);
+            var sBlock = PermutationSBlock(xor, Tables.SBlocks);
             
-            return Permutation(SBlock, Tables.PBlock);
+            return Permutation(sBlock, Tables.PBlock);
         }
     }
 }
