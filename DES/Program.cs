@@ -24,8 +24,8 @@ namespace DES
             //var q = new CipherContext.CipherContext(key, EncryptionMode.CBC, new byte[]{1,1,1,0,1,1,1,1});
             //var q = new CipherContext.CipherContext(key, EncryptionMode.OFB, new byte[]{1,1,1,0,1,1,1,1});
             //var q = new CipherContext(key, EncryptionMode.RD, new byte[]{1,1,1,0,1,1,1,1});
-            //var q = new CipherContext.CipherContext(key, EncryptionMode.RDH, new byte[]{1,1,1,0,1,1,1,1}, new byte[]{1,3,1,0,1,1,1,254});
-            var q = new CipherContext.CipherContext(key, EncryptionMode.CTR, new byte[]{1,1,1,0,1,1,1,1});
+            var q = new CipherContext.CipherContext(key, EncryptionMode.RDH, new byte[]{1,1,1,0,1,1,1,1}, "kek");
+            //var q = new CipherContext.CipherContext(key, EncryptionMode.CTR, new byte[]{1,1,1,0,1,1,1,1});
             q.Encoder = new DES();
             var keys = q.GenerateRoundKeys();
             
