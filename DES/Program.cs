@@ -23,7 +23,7 @@ namespace DES
             //var q = new CipherContext.CipherContext(key, EncryptionMode.ECB);
             //var q = new CipherContext.CipherContext(key, EncryptionMode.CBC, new byte[]{1,1,1,0,1,1,1,1});
             //var q = new CipherContext.CipherContext(key, EncryptionMode.OFB, new byte[]{1,1,1,0,1,1,1,1});
-            //var q = new CipherContext(key, EncryptionMode.RD, new byte[]{1,1,1,0,1,1,1,1});
+            //var q = new CipherContext.CipherContext(key, EncryptionMode.RD, new byte[]{1,1,1,0,1,1,1,1});
             var q = new CipherContext.CipherContext(key, EncryptionMode.RDH, new byte[]{1,1,1,0,1,1,1,1}, "kek");
             //var q = new CipherContext.CipherContext(key, EncryptionMode.CTR, new byte[]{1,1,1,0,1,1,1,1});
             q.Encoder = new DES();
