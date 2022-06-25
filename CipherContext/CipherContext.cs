@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using CipherContext.EncryptionModes;
 using SymmetricalAlgorithm;
 using static Cryptography.Extensions.ByteArrayExtensions;
@@ -29,51 +30,35 @@ namespace CipherContext
             _values = values;
         }
 
-        public byte[] Encrypt(byte[] message, byte[][] roundKeys)
+        public async Task<byte[]> Encrypt(byte[] message, byte[][] roundKeys)
         {
             var original = PaddingPKCs7(message, Encoder.BlockSize);
-            
-            switch (_encryptionMode)
+
+            return _encryptionMode switch
             {
-                case EncryptionMode.ECB: 
-                    return new ECB(Encoder).EncryptBlock(original, roundKeys);
-                case EncryptionMode.CBC:
-                    return new CBC(Encoder).EncryptBlock(original, roundKeys, _values);
-                case EncryptionMode.CFB:
-                    return new CFB(Encoder).EncryptBlock(original, roundKeys, _values);
-                case EncryptionMode.OFB:
-                    return new OFB(Encoder).EncryptBlock(original, roundKeys, _values);
-                case EncryptionMode.CTR:
-                    return new CTR(Encoder).EncryptBlock(original, roundKeys, _values);
-                case EncryptionMode.RD:
-                    return new RD(Encoder).EncryptBlock(original, roundKeys, _values);
-                case EncryptionMode.RDH:
-                    return new RDH(Encoder).EncryptBlock(original, roundKeys, _values);
-                default: 
-                    throw new ArgumentOutOfRangeException(nameof(_encryptionMode), _encryptionMode, "kek");
-            }
+                EncryptionMode.ECB => await Task.Run(() => new ECB(Encoder).EncryptBlock(original, roundKeys)),
+                EncryptionMode.CBC => await Task.Run(() => new CBC(Encoder).EncryptBlock(original, roundKeys, _values)),
+                EncryptionMode.CFB => await Task.Run(() => new CFB(Encoder).EncryptBlock(original, roundKeys, _values)),
+                EncryptionMode.OFB => await Task.Run(() => new OFB(Encoder).EncryptBlock(original, roundKeys, _values)),
+                EncryptionMode.CTR => await Task.Run(() => new CTR(Encoder).EncryptBlock(original, roundKeys, _values)),
+                EncryptionMode.RD => await Task.Run(() => new RD(Encoder).EncryptBlock(original, roundKeys, _values)),
+                EncryptionMode.RDH => await Task.Run(() => new RDH(Encoder).EncryptBlock(original, roundKeys, _values)),
+                _ => throw new ArgumentOutOfRangeException(nameof(_encryptionMode), _encryptionMode, "kek")
+            };
         }
-        public byte[] Decrypt(byte[] message, byte[][] roundKeys)
+        public async Task<byte[]> Decrypt(byte[] message, byte[][] roundKeys)
         {
-            switch (_encryptionMode)
+            return _encryptionMode switch 
             {
-                case EncryptionMode.ECB: 
-                    return new ECB(Encoder).DecryptBlock(message, roundKeys);
-                case EncryptionMode.CBC: 
-                    return new CBC(Encoder).DecryptBlock(message, roundKeys, _values);
-                case EncryptionMode.CFB: 
-                    return new CFB(Encoder).DecryptBlock(message, roundKeys, _values);
-                case EncryptionMode.OFB:
-                    return new OFB(Encoder).DecryptBlock(message, roundKeys, _values);
-                case EncryptionMode.CTR:
-                    return new CTR(Encoder).DecryptBlock(message, roundKeys, _values);
-                case EncryptionMode.RD:
-                    return new RD(Encoder).DecryptBlock(message, roundKeys);
-                case EncryptionMode.RDH:
-                    return new RDH(Encoder).DecryptBlock(message, roundKeys);
-                default: 
-                    throw new ArgumentOutOfRangeException(nameof(_encryptionMode), _encryptionMode, "kek");
-            }
+                EncryptionMode.ECB => await Task.Run(() => new ECB(Encoder).DecryptBlock(message, roundKeys)),
+                EncryptionMode.CBC => await Task.Run(() => new CBC(Encoder).DecryptBlock(message, roundKeys, _values)),
+                EncryptionMode.CFB => await Task.Run(() => new CFB(Encoder).DecryptBlock(message, roundKeys, _values)),
+                EncryptionMode.OFB => await Task.Run(() => new OFB(Encoder).DecryptBlock(message, roundKeys, _values)),
+                EncryptionMode.CTR => await Task.Run(() => new CTR(Encoder).DecryptBlock(message, roundKeys, _values)),
+                EncryptionMode.RD => await Task.Run(() => new RD(Encoder).DecryptBlock(message, roundKeys)),
+                EncryptionMode.RDH => await Task.Run(() => new RDH(Encoder).DecryptBlock(message, roundKeys)),
+                _ => throw new ArgumentOutOfRangeException(nameof(_encryptionMode), _encryptionMode, "kek")
+            };
         }
         public byte[][] GenerateRoundKeys()
         {
