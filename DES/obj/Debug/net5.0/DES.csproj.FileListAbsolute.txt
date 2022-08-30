@@ -3,7 +3,6 @@ C:\Users\pbure\RiderProjects\CryptographyLabs\DES\bin\Debug\net5.0\DES.deps.json
 C:\Users\pbure\RiderProjects\CryptographyLabs\DES\bin\Debug\net5.0\DES.runtimeconfig.json
 C:\Users\pbure\RiderProjects\CryptographyLabs\DES\bin\Debug\net5.0\DES.runtimeconfig.dev.json
 C:\Users\pbure\RiderProjects\CryptographyLabs\DES\bin\Debug\net5.0\DES.dll
-C:\Users\pbure\RiderProjects\CryptographyLabs\DES\bin\Debug\net5.0\ref\DES.dll
 C:\Users\pbure\RiderProjects\CryptographyLabs\DES\bin\Debug\net5.0\DES.pdb
 C:\Users\pbure\RiderProjects\CryptographyLabs\DES\obj\Debug\net5.0\DES.csproj.AssemblyReference.cache
 C:\Users\pbure\RiderProjects\CryptographyLabs\DES\obj\Debug\net5.0\DES.GeneratedMSBuildEditorConfig.editorconfig
@@ -21,3 +20,4 @@ C:\Users\pbure\RiderProjects\CryptographyLabs\DES\bin\Debug\net5.0\CipherContext
 C:\Users\pbure\RiderProjects\CryptographyLabs\DES\bin\Debug\net5.0\SymmetricalAlgorithm.dll
 C:\Users\pbure\RiderProjects\CryptographyLabs\DES\bin\Debug\net5.0\CipherContext.pdb
 C:\Users\pbure\RiderProjects\CryptographyLabs\DES\bin\Debug\net5.0\SymmetricalAlgorithm.pdb
+C:\Users\pbure\RiderProjects\CryptographyLabs\DES\obj\Debug\net5.0\refint\DES.dll

@@ -5,7 +5,6 @@ C:\Users\pbure\RiderProjects\CryptographyLabs\CipherContext\obj\Debug\net5.0\Cip
 C:\Users\pbure\RiderProjects\CryptographyLabs\CipherContext\obj\Debug\net5.0\CipherContext.csproj.CoreCompileInputs.cache
 C:\Users\pbure\RiderProjects\CryptographyLabs\CipherContext\bin\Debug\net5.0\CipherContext.deps.json
 C:\Users\pbure\RiderProjects\CryptographyLabs\CipherContext\bin\Debug\net5.0\CipherContext.dll
-C:\Users\pbure\RiderProjects\CryptographyLabs\CipherContext\bin\Debug\net5.0\ref\CipherContext.dll
 C:\Users\pbure\RiderProjects\CryptographyLabs\CipherContext\bin\Debug\net5.0\CipherContext.pdb
 C:\Users\pbure\RiderProjects\CryptographyLabs\CipherContext\bin\Debug\net5.0\Cryptography.Extensions.dll
 C:\Users\pbure\RiderProjects\CryptographyLabs\CipherContext\bin\Debug\net5.0\SymmetricalAlgorithm.dll
@@ -15,3 +14,4 @@ C:\Users\pbure\RiderProjects\CryptographyLabs\CipherContext\obj\Debug\net5.0\Cip
 C:\Users\pbure\RiderProjects\CryptographyLabs\CipherContext\obj\Debug\net5.0\CipherContext.dll
 C:\Users\pbure\RiderProjects\CryptographyLabs\CipherContext\obj\Debug\net5.0\ref\CipherContext.dll
 C:\Users\pbure\RiderProjects\CryptographyLabs\CipherContext\obj\Debug\net5.0\CipherContext.pdb
+C:\Users\pbure\RiderProjects\CryptographyLabs\CipherContext\obj\Debug\net5.0\refint\CipherContext.dll

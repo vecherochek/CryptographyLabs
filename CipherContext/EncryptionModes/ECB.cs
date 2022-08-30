@@ -1,23 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Threading;
 using System.Threading.Tasks;
 using SymmetricalAlgorithm;
 
 namespace CipherContext.EncryptionModes
 {
-    internal class ECB
+    internal class ECB : IEncryptionMode
     {
-        private ISymmetricalAlgorithm _encoder;
-        
+        private readonly ISymmetricalAlgorithm _encoder;
+
         public ECB(ISymmetricalAlgorithm encryptor)
         {
             _encoder = encryptor;
         }
-        
-        public byte[] EncryptBlock(byte[] message, byte[][] roundKeys)
+
+        public async Task<byte[]> EncryptBlockAsync(byte[] message, byte[][] roundKeys, params object[] values)
         {
             var tasks = new List<Task<byte[]>>();
             for (var i = 0; i < message.Length / _encoder.BlockSize; i++)
@@ -27,30 +25,29 @@ namespace CipherContext.EncryptionModes
                 {
                     var currentBlock = message.Skip(i1 * _encoder.BlockSize).Take(_encoder.BlockSize).ToArray();
                     return _encoder.Encrypt(currentBlock, roundKeys);
-                }));
+                }, default));
             }
-            var result =  Task.WhenAll(tasks);
-            
-            return result.Result.SelectMany(block => block).ToArray();
-        }
-        public byte[] DecryptBlock(byte[] message, byte[][] roundKeys)
-        {
 
+            var result = await Task.WhenAll(tasks).ConfigureAwait(false);
+            return result.SelectMany(block => block).ToArray();
+        }
+
+        public async Task<byte[]> DecryptBlockAsync(byte[] message, byte[][] roundKeys, params object[] values)
+        {
             var tasks = new List<Task<byte[]>>();
             for (var i = 0; i < message.Length / _encoder.BlockSize; i++)
             {
                 var i1 = i;
-                tasks.Add(new Task<byte[]>(() =>
+                tasks.Add(Task.Run(() =>
                 {
                     var currentBlock = message.Skip(i1 * _encoder.BlockSize).Take(_encoder.BlockSize).ToArray();
                     return _encoder.Decrypt(currentBlock, roundKeys);
-                }));
-                tasks[i].Start();
+                }, default));
             }
-            var decrypted =  Task.WhenAll(tasks);
-            var result = decrypted.Result.SelectMany(block => block).ToArray();
-            Array.Resize(ref result, message.Length - result[^1]);
 
+            var decrypted = await Task.WhenAll(tasks).ConfigureAwait(false);
+            var result = decrypted.SelectMany(block => block).ToArray();
+            Array.Resize(ref result, message.Length - result[^1]);
             return result;
         }
     }

@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Diagnostics;
 using System.IO;
-using System.Numerics;
-using System.Text;
 using System.Threading.Tasks;
 using CipherContext;
-using static Cryptography.Extensions.ByteArrayExtensions;
 
 namespace DES
 {
@@ -14,20 +10,22 @@ namespace DES
     {
         static async Task Main(string[] args)
         {
-            ulong a =  0x1234567890abcdef;
+            ulong a = 0x1234567890abcdef;
             byte[] key = BitConverter.GetBytes(a);
-            
-            //var q = new CipherContext.CipherContext(key, EncryptionMode.CFB, new byte[]{1,1,1,0,1,1,1,1});
-            //var q = new CipherContext.CipherContext(key, EncryptionMode.ECB);
-            //var q = new CipherContext.CipherContext(key, EncryptionMode.CBC, new byte[]{1,1,1,0,1,1,1,1});
-            //var q = new CipherContext.CipherContext(key, EncryptionMode.OFB, new byte[]{1,1,1,0,1,1,1,1});
-            //var q = new CipherContext.CipherContext(key, EncryptionMode.RD, new byte[]{1,1,1,0,1,1,1,1});
-            var q = new CipherContext.CipherContext(key, EncryptionMode.RDH, new byte[]{1,1,1,0,1,1,1,1}, "kek");
-            //var q = new CipherContext.CipherContext(key, EncryptionMode.CTR, new byte[]{1,1,1,0,1,1,1,1});
+
+            var q = new CipherContext.CipherContext(key, new byte[] {1, 1, 1, 0, 1, 1, 1, 1}, "kek");
 
             q.Encoder = new DES();
-            var keys = q.GenerateRoundKeys();
+            q.EncryptionMode = EncryptionModeList.ECB;
+            q.EncryptionMode = EncryptionModeList.CBC;
+            q.EncryptionMode = EncryptionModeList.CFB;
+            q.EncryptionMode = EncryptionModeList.CTR;
+            q.EncryptionMode = EncryptionModeList.OFB;
+            q.EncryptionMode = EncryptionModeList.RD;
+            q.EncryptionMode = EncryptionModeList.RDH;
             
+            var keys = q.GenerateRoundKeys();
+
             const string origin = "testing.txt";
             const string encrypted = "encrypted.txt";
             const string decrypted = "decrypted.txt";
@@ -42,28 +40,27 @@ namespace DES
             var originPath = Path.Combine(workingDir, origin);
             var encryptedPath = Path.Combine(workingDir, encrypted);
             var decryptedPath = Path.Combine(workingDir, decrypted);
-            
+
             Stopwatch stopwatch = new Stopwatch();
             var bytes = await File.ReadAllBytesAsync(originPath);
-            Console.WriteLine($"Файл размером {bytes.Length} байт" + Environment.NewLine);
-            
+            //Console.WriteLine($"Файл размером {bytes.Length} байт" + Environment.NewLine);
+
             stopwatch.Start();
             var encryptedBytes = await q.Encrypt(bytes, keys);
-            stopwatch.Stop();
-            
-            Console.WriteLine($"Время шифр: {stopwatch.Elapsed.TotalSeconds} сек");
-            stopwatch.Reset();
+            //stopwatch.Stop();
+            //Console.WriteLine($"Время шифр: {stopwatch.Elapsed.TotalSeconds} сек");
+            //stopwatch.Reset();
 
             await File.WriteAllBytesAsync(encryptedPath, encryptedBytes);
-            
-            var bytes2 = await File.ReadAllBytesAsync(encryptedPath);
-            
-            stopwatch.Start();
-            var decryptedBytes = await q.Decrypt(bytes2, keys);
+
+            var bytes2 = File.ReadAllBytesAsync(encryptedPath);
+
+            ////stopwatch.Start();
+            var decryptedBytes = q.Decrypt(await bytes2, keys);
+            await File.WriteAllBytesAsync(decryptedPath, await decryptedBytes);
+
             stopwatch.Stop();
-            Console.WriteLine($"Время дешифр: {stopwatch.Elapsed.TotalSeconds} сек");
-            
-            await File.WriteAllBytesAsync(decryptedPath, decryptedBytes);
+            Console.WriteLine($"Время: {stopwatch.Elapsed.TotalSeconds} сек");
         }
     }
 }
