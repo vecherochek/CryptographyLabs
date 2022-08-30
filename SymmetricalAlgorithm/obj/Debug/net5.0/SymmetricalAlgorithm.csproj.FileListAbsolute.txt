@@ -1,6 +1,5 @@
 C:\Users\pbure\RiderProjects\CryptographyLabs\SymmetricalAlgorithm\bin\Debug\net5.0\SymmetricalAlgorithm.deps.json
 C:\Users\pbure\RiderProjects\CryptographyLabs\SymmetricalAlgorithm\bin\Debug\net5.0\SymmetricalAlgorithm.dll
-C:\Users\pbure\RiderProjects\CryptographyLabs\SymmetricalAlgorithm\bin\Debug\net5.0\ref\SymmetricalAlgorithm.dll
 C:\Users\pbure\RiderProjects\CryptographyLabs\SymmetricalAlgorithm\bin\Debug\net5.0\SymmetricalAlgorithm.pdb
 C:\Users\pbure\RiderProjects\CryptographyLabs\SymmetricalAlgorithm\obj\Debug\net5.0\SymmetricalAlgorithm.csproj.AssemblyReference.cache
 C:\Users\pbure\RiderProjects\CryptographyLabs\SymmetricalAlgorithm\obj\Debug\net5.0\SymmetricalAlgorithm.GeneratedMSBuildEditorConfig.editorconfig
@@ -10,3 +9,4 @@ C:\Users\pbure\RiderProjects\CryptographyLabs\SymmetricalAlgorithm\obj\Debug\net
 C:\Users\pbure\RiderProjects\CryptographyLabs\SymmetricalAlgorithm\obj\Debug\net5.0\SymmetricalAlgorithm.dll
 C:\Users\pbure\RiderProjects\CryptographyLabs\SymmetricalAlgorithm\obj\Debug\net5.0\ref\SymmetricalAlgorithm.dll
 C:\Users\pbure\RiderProjects\CryptographyLabs\SymmetricalAlgorithm\obj\Debug\net5.0\SymmetricalAlgorithm.pdb
+C:\Users\pbure\RiderProjects\CryptographyLabs\SymmetricalAlgorithm\obj\Debug\net5.0\refint\SymmetricalAlgorithm.dll
